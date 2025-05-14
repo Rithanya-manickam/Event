@@ -322,7 +322,6 @@ const UserDashboard = () => {
           {location.pathname === "/user" && <UserWelcomeBanner />}
           
           <Routes>
-            <Route path="/" element={<UserWelcomeBanner />} />
             <Route 
               path="/events" 
               element={

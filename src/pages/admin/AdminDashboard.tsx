@@ -362,7 +362,6 @@ const AdminDashboard = () => {
           
           <div className="mt-6">
             <Routes>
-              <Route path="/" element={<WelcomeBanner />} />
               <Route path="events" element={
                 <div>
                   <EventForm

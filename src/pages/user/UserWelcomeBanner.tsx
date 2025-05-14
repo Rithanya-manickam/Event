@@ -81,7 +81,7 @@ const UserWelcomeBanner = () => {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 rounded-lg overflow-hidden">
             <img 
-              src="https://source.unsplash.com/random/800x600/?tech,conference" 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMRWMYUbmHiIl1kJXDqMGIsx8a6utG9P8l-g&s" 
               alt="Tech Conference" 
               className="w-full h-48 object-cover"
             />

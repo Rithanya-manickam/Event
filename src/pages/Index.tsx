@@ -79,7 +79,7 @@ const Index = () => {
       {/* Header */}
       <header className="flex justify-between items-center px-6 py-4 shadow-md bg-white dark:bg-gray-900">
         <div className="flex items-center">
-          <div className="h-10 w-10 rounded-full bg-gradient-primary flex items-center justify-center mr-3">
+          <div className="h-10 w-10 rounded-full bg-gradient-primary flex items-center justify-center mr-8">
             <span className="font-bold text-white text-lg">RR</span>
           </div>
           <span className="text-xl font-bold text-gradient">RR Event Management</span>

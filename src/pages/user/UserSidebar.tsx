@@ -36,11 +36,11 @@ const UserSidebar: React.FC<UserSidebarProps> = ({ sidebarOpen, setSidebarOpen, 
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
-      <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+      <div className="flex items-center justify-between p-4 border-b border-indigo-700 dark:border-gray-700">
         <h2 className="text-xl font-bold text-sidebar-primary dark:text-sidebar-primary-foreground">RR Events</h2>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <button className="md:hidden text-sidebar-foreground" onClick={() => setSidebarOpen(false)}>
+          <button className="md:hidden text-white" onClick={() => setSidebarOpen(false)}>
             <XIcon className="h-6 w-6" />
           </button>
         </div>
@@ -52,7 +52,7 @@ const UserSidebar: React.FC<UserSidebarProps> = ({ sidebarOpen, setSidebarOpen, 
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center space-x-3 p-3 rounded-md transition-colors ${
+                  `flex items-center space-x-4 p-3 rounded-md transition-colors ${
                     isActive 
                       ? 'bg-sidebar-primary text-sidebar-primary-foreground' 
                       : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
