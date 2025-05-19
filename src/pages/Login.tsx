@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   UserIcon, 
   LockIcon, 
   LogInIcon, 
-  ShieldIcon, 
   UserRoundIcon 
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +28,6 @@ const dummyUsers = {
 };
 
 const Login = () => {
-  const [role, setRole] = useState('user');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,25 +41,36 @@ const Login = () => {
     
     // Simulate API call delay
     setTimeout(() => {
-      const userData = dummyUsers[role as keyof typeof dummyUsers];
-      
-      if (email === userData.email && password === userData.password) {
+      let loggedInRole: 'admin' | 'user' | null = null;
+      let userData;
+
+      // Check admin credentials
+      if (email === dummyUsers.admin.email && password === dummyUsers.admin.password) {
+        loggedInRole = 'admin';
+        userData = dummyUsers.admin;
+      } 
+      // Check user credentials if not admin
+      else if (email === dummyUsers.user.email && password === dummyUsers.user.password) {
+        loggedInRole = 'user';
+        userData = dummyUsers.user;
+      }
+
+      if (loggedInRole && userData) {
         // Generate token and login
-        const payload = { email, role };
+        const payload = { email, role: loggedInRole };
         const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
         const body = btoa(JSON.stringify(payload));
-        const signature = 'dummy-signature';
+        const signature = 'dummy-signature'; // In a real app, this would be a secure signature
         const token = `${header}.${body}.${signature}`;
         
-        login(token, role as 'admin' | 'user');
+        login(token, loggedInRole);
         
         toast({
           title: "Login Successful",
-          description: `Welcome back, ${role === 'admin' ? 'Administrator' : 'User'}!`,
+          description: `Welcome back, ${loggedInRole === 'admin' ? 'Administrator' : 'User'}!`,
         });
         
-        // Navigate after login is complete
-        navigate(role === 'admin' ? '/admin' : '/user');
+        navigate(loggedInRole === 'admin' ? '/admin' : '/user');
       } else {
         toast({
           title: "Login Failed",
@@ -93,31 +101,8 @@ const Login = () => {
             <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="role-selector">Account Type</Label>
-                <div className="grid grid-cols-2 gap-3" id="role-selector">
-                  <Button
-                    type="button"
-                    variant={role === 'user' ? 'default' : 'outline'}
-                    className={`flex items-center gap-2 ${role === 'user' ? '' : 'text-gray-700 dark:text-gray-300'}`}
-                    onClick={() => setRole('user')}
-                  >
-                    <UserIcon className="h-5 w-5" />
-                    <span>User</span>
-                  </Button>
-                  
-                  <Button
-                    type="button"
-                    variant={role === 'admin' ? 'default' : 'outline'}
-                    className={`flex items-center gap-2 ${role === 'admin' ? '' : 'text-gray-700 dark:text-gray-300'}`}
-                    onClick={() => setRole('admin')}
-                  >
-                    <ShieldIcon className="h-5 w-5" />
-                    <span>Admin</span>
-                  </Button>
-                </div>
-              </div>
+            <form onSubmit={handleLogin} className="space-y-6"> {/* Increased spacing from space-y-4 */}
+              {/* Role selection removed */}
               
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -126,7 +111,7 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder={role === 'user' ? 'user@example.com' : 'admin@example.com'}
+                    placeholder="your.email@example.com" // Generic placeholder
                     className="pl-10"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -148,7 +133,7 @@ const Login = () => {
                   <Input
                     id="password"
                     type="password"
-                    placeholder={role === 'user' ? 'user123' : 'admin123'}
+                    placeholder="Your password" // Generic placeholder
                     className="pl-10"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
